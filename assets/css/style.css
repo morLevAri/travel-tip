@@ -1,0 +1,14 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  background-color: #c5c5c5;
+}
+
+.map {
+  background-color: #feffc0;
+  margin-bottom: 50px;
+}
+/*# sourceMappingURL=style.css.map */
