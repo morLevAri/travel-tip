@@ -30,6 +30,7 @@ function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
     // const API_KEY = ''
     var elGoogleApi = document.createElement('script');
+    // elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${secretkey}`;
     elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${mykey}`;
     elGoogleApi.async = true;
     document.body.append(elGoogleApi);
