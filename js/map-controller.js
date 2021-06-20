@@ -2,34 +2,42 @@
 
 import { mapService } from './services/map-service.js'
 
-var gMap;
-
-console.log('Controller is ready!');
-
-mapService.start()
+let gMap;
 
 window.onload = () => {
     initMap()
+        .then(() => {
+            addMarker({ lat: 32.0749831, lng: 34.9120554 });
+        })
+        .catch(err => {
+            console.log('INIT MAP ERROR', err);
+        })
 }
 
+
 export function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
-            console.log('google available');
             gMap = new google.maps.Map(
-                document.querySelector('.map'), {
+                document.querySelector('#map'), {
                 center: { lat, lng },
                 zoom: 15
             })
-            console.log('Map!', gMap);
         })
+}
+
+function addMarker(loc) {
+    var marker = new google.maps.Marker({
+        position: loc,
+        map: gMap,
+        title: 'Hello World!'
+    });
+    return marker;
 }
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
-    // const API_KEY = ''
-    var elGoogleApi = document.createElement('script');
+    let elGoogleApi = document.createElement('script');
     // elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${secretkey}`;
     elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${mykey}`;
     elGoogleApi.async = true;

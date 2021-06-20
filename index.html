@@ -11,13 +11,28 @@
 
 <body>
     <h1>Travel Tip</h1>
-    <form action="">
-        <input type="text" value="" placeholder="Enter Location" class="search-input">
-        <button class="go-btn">GO</button>
-        <button class="my-location-btn">My Location</button>
-    </form>
-    <div class="map" id="map" style="width: 100%; height: 400px;"></div>
-    <button class="btn">Click Me</button>
+    <main>
+        <form class="location-nav" action="">
+            <input type="text" value="" placeholder="Enter Location" class="search-input">
+            <button class="go-btn">GO</button>
+            <button class="my-location-btn">My Location</button>
+        </form>
+        <section class="main-container">
+            <aside class="weather-location">
+                <div class="weather-container">
+                    <h2>Weather today</h2>
+                </div>
+                <div class="location-container">
+                    <h2>Location Table</h2>
+                </div>
+            </aside>
+            <div class="map" id="map" style="height: 400px"></div>
+        </section>
+        <section class="copy-location">
+            <h2>LOCATION: current location</h2>
+            <button class="btn">Click Me</button>
+        </section>
+    </main>
 
     <script src="config.js"></script>
     <script src="lib/jquery.js"></script>

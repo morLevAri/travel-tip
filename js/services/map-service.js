@@ -1,14 +1,24 @@
 'use strict';
 
-// import { utilService } from './util-service.js'
+import { utilService } from './util-service.js'
 
 export const mapService = {
-    start
+    getLocs: getLocs,
+    getPosition: getPosition,
 }
 
-function start() {
-    console.log('start project');
-    // utilService.makeId()
+// let locs = [{ lat: 32.0749831, lng: 34.9120554 }]
+let locs = [{ lat: 11.22, lng: 22.11 }]
+
+
+function getLocs() {
+    return new Promise((resolve) => resolve(locs))
 }
 
+function getPosition() {
+    console.log('Getting Pos');
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject)
+    })
+}
 

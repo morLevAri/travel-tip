@@ -3,10 +3,67 @@
 }
 
 body {
-    background-color: rgb(197, 197, 197);
-}
 
-.map {
-    background-color: rgb(254, 255, 192);
-    margin-bottom: 50px;
+    background-color: rgb(19, 64, 82);
+
+    h1 {
+        color: rgb(248, 248, 167);
+        text-align: center;
+    }
+
+    main {
+
+        .location-nav {
+            display: flex;
+            margin: 20px auto;
+            justify-content: space-between;
+            width: 60%;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+
+            .weather-location {
+                width: 30%;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .weather-container {
+                    padding: 10px;
+                    height: 48%;
+                    background-color: #fff;
+                    border: 1px solid grey;
+
+                }
+
+                .location-container {
+                    padding: 10px;
+                    height: 48%;
+                    background-color: #fff;
+                    border: 1px solid grey;
+                }
+            }
+
+            .map {
+                width: 30%;
+                padding: 10px;
+                margin: 10px;
+            }
+        }
+
+        .copy-location {
+            h2 {
+                font-weight: 200;
+                color: white;
+            }
+
+            display: flex;
+            margin: 20px auto;
+            justify-content: space-between;
+            width: 60%;
+        }
+    }
 }
