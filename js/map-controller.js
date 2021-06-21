@@ -72,6 +72,16 @@ function onSearchLocation(ev) {
     elInput.value = '';
 }
 
+
+function renderLocationsTAble(locations) {
+    const strHTML = locations.map((location) =>
+        `<li class="location"><p>${location}</p></li>
+        <button class="go-to-location-btn"><i class="fas fa-bullseye"></i>Go</button>
+        <button class="delete-btn"><i class="fas fa-trash"></i>Delete</button>
+        `)
+    document.querySelector('.locations-list').innerHTML = strHTML.join('');
+}
+
 function addMarker(loc) {
     let marker = new google.maps.Marker({
         position: loc,
