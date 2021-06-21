@@ -16,9 +16,3 @@ export const locationService = {
     // createdAt,
     // updatedAt,
 }
-
-// function getLocations() {
-//     gLocations = loadFromStorage(STORAGE_KEY);
-//     console.log('Locations in service:', gLocations);
-//     return gLocations
-// }

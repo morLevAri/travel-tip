@@ -31,6 +31,10 @@ export function initMap() {
                 const lngCoord = e.latLng.lng();
                 console.log('lat:', latCoord, 'lng:', lngCoord);
 
+
+
+
+
                 let marker = new google.maps.Marker({
                     position: e.latLng,
                     map: gMap,
@@ -46,26 +50,26 @@ export function initMap() {
 
 function renderPosition(ans) {
 
-    let location = { lat: ans.coords.latitude, lng: ans.coords.longitude };
-    panTo(location.lat, location.lng);
-    addMarker(location);
+    let position = { lat: ans.coords.latitude, lng: ans.coords.longitude };
+    panTo(position.lat, position.lng);
+    addMarker(position);
 
     let infoWindow = new google.maps.InfoWindow({
         content: "Click the map to get Lat/Lng!",
-        position: location,
+        position,
     });
     infoWindow.open(gMap);
 
-    gMap.addListener("click", (mapsMouseEvent) => {
+    gMap.addListener("click", () => {
         infoWindow.close();
-        infoWindow = new google.maps.InfoWindow({
-            position: mapsMouseEvent.latLng,
-        });
+        // infoWindow = new google.maps.InfoWindow({
+        //     position: mapsMouseEvent.latLng,
+        // });
 
-        infoWindow.setContent(
-            JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
-        );
-        infoWindow.open(gMap);
+        // infoWindow.setContent(
+        //     JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+        // );
+        // infoWindow.open(gMap);
     });
 }
 
@@ -87,9 +91,9 @@ function onFindMyLocation() {
     console.log('my location');
     mapService.getPosition()
         .then(ans => {
-            let location = { lat: ans.coords.latitude, lng: ans.coords.longitude };
-            panTo(location.lat, location.lng);
-            addMarker(location);
+            let position = { lat: ans.coords.latitude, lng: ans.coords.longitude };
+            panTo(position.lat, position.lng);
+            addMarker(position);
         })
 }
 
