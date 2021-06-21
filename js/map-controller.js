@@ -2,21 +2,30 @@
 
 import { mapService } from './services/map-service.js'
 import { locationService } from './services/location-service.js'
-// import { storageService } from './services/storage-service.js'
+import { storageService } from './services/storage-service.js'
 
 let gMap;
 
 window.onload = () => {
     initMap()
         .then(() => {
-            mapService.getPosition()
-                .then((ans) => renderPosition(ans))
+            mapService.getMyPosition()
+                .then((position) => {
+                    renderPosition(position)
+                })
+        })
+        .then(() => {
+            locationService.getLocations()
+                .then((locations) => {
+                    renderLocationsTAble(locations)
+                })
         })
         .catch(err => {
             console.log('INIT MAP ERROR:', err);
         })
 }
 
+document.querySelector('.location-nav').addEventListener('submit', onSearchLocation)
 document.querySelector('.my-location-btn').addEventListener('click', onFindMyLocation)
 
 export function initMap() {
@@ -31,16 +40,11 @@ export function initMap() {
                 const lngCoord = e.latLng.lng();
                 console.log('lat:', latCoord, 'lng:', lngCoord);
 
-
-
-
-
                 let marker = new google.maps.Marker({
                     position: e.latLng,
                     map: gMap,
                     icon: '../assets/imgs/nav.png',
                 });
-                gMap.setCenter(marker.getPosition())
             })
         })
         .catch(err => {
@@ -49,32 +53,27 @@ export function initMap() {
 }
 
 function renderPosition(ans) {
-
     let position = { lat: ans.coords.latitude, lng: ans.coords.longitude };
     panTo(position.lat, position.lng);
     addMarker(position);
+}
 
-    let infoWindow = new google.maps.InfoWindow({
-        content: "Click the map to get Lat/Lng!",
-        position,
-    });
-    infoWindow.open(gMap);
-
-    gMap.addListener("click", () => {
-        infoWindow.close();
-        // infoWindow = new google.maps.InfoWindow({
-        //     position: mapsMouseEvent.latLng,
-        // });
-
-        // infoWindow.setContent(
-        //     JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
-        // );
-        // infoWindow.open(gMap);
-    });
+function onSearchLocation(ev) {
+    ev.preventDefault();
+    let elInput = document.querySelector('input[name=search-input]');
+    locationService.searchLocation(elInput.value)
+        .then(location => {
+            const locations = locationService.getLocations();
+            const { lat, lng } = location.results[0].geometry.location
+            panTo(lat, lng)
+            renderLocationsTAble(locations)
+        })
+    document.querySelector('.curr-loc-span').innerHTML = elInput.value;
+    elInput.value = '';
 }
 
 function addMarker(loc) {
-    var marker = new google.maps.Marker({
+    let marker = new google.maps.Marker({
         position: loc,
         map: gMap,
         icon: '../assets/imgs/nav.png',
@@ -83,13 +82,13 @@ function addMarker(loc) {
 }
 
 function panTo(lat, lng) {
-    var laLatLng = new google.maps.LatLng(lat, lng);
+    let laLatLng = new google.maps.LatLng(lat, lng);
     gMap.panTo(laLatLng);
 }
 
 function onFindMyLocation() {
     console.log('my location');
-    mapService.getPosition()
+    mapService.getMyPosition()
         .then(ans => {
             let position = { lat: ans.coords.latitude, lng: ans.coords.longitude };
             panTo(position.lat, position.lng);

@@ -3,10 +3,10 @@
 // import { storageService } from './services/storage-service.js'
 
 export const mapService = {
-    getPosition,
+    getMyPosition,
 }
 
-function getPosition() {
+function getMyPosition() {
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject)
     })

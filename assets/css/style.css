@@ -32,7 +32,7 @@ body main .main-container {
           justify-content: center;
 }
 
-body main .main-container .weather-location {
+body main .main-container .weather-locations {
   width: 30%;
   padding: 10px;
   display: -webkit-box;
@@ -47,14 +47,14 @@ body main .main-container .weather-location {
           justify-content: space-between;
 }
 
-body main .main-container .weather-location .weather-container {
+body main .main-container .weather-locations .weather-container {
   padding: 10px;
   height: 48%;
   background-color: #fff;
   border: 1px solid grey;
 }
 
-body main .main-container .weather-location .location-container {
+body main .main-container .weather-locations .locations-container {
   padding: 10px;
   height: 48%;
   background-color: #fff;
@@ -67,7 +67,7 @@ body main .main-container .map {
   margin: 10px;
 }
 
-body main .copy-location {
+body main .curr-location {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -78,7 +78,7 @@ body main .copy-location {
   width: 60%;
 }
 
-body main .copy-location h2 {
+body main .curr-location h2 {
   font-weight: 200;
   color: white;
 }

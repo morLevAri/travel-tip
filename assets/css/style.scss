@@ -24,7 +24,7 @@ body {
             display: flex;
             justify-content: center;
 
-            .weather-location {
+            .weather-locations {
                 width: 30%;
                 padding: 10px;
                 display: flex;
@@ -39,7 +39,7 @@ body {
 
                 }
 
-                .location-container {
+                .locations-container {
                     padding: 10px;
                     height: 48%;
                     background-color: #fff;
@@ -54,7 +54,7 @@ body {
             }
         }
 
-        .copy-location {
+        .curr-location {
             h2 {
                 font-weight: 200;
                 color: white;
