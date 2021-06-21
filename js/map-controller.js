@@ -17,7 +17,7 @@ window.onload = () => {
         .then(() => {
             locationService.getLocations()
                 .then((locations) => {
-                    renderLocationsTAble(locations)
+                    renderLocationsTable(locations)
                 })
         })
         .catch(err => {
@@ -27,6 +27,7 @@ window.onload = () => {
 
 document.querySelector('.location-nav').addEventListener('submit', onSearchLocation)
 document.querySelector('.my-location-btn').addEventListener('click', onFindMyLocation)
+
 
 export function initMap() {
     return _connectGoogleApi()
@@ -66,20 +67,27 @@ function onSearchLocation(ev) {
             const locations = locationService.getLocations();
             const { lat, lng } = location.results[0].geometry.location
             panTo(lat, lng)
-            renderLocationsTAble(locations)
+            return locations
         })
+        .then(locations => { renderLocationsTable(locations) })
+
     document.querySelector('.curr-loc-span').innerHTML = elInput.value;
     elInput.value = '';
 }
 
-
-function renderLocationsTAble(locations) {
-    const strHTML = locations.map((location) =>
-        `<li class="location"><p>${location}</p></li>
-        <button class="go-to-location-btn"><i class="fas fa-bullseye"></i>Go</button>
+function renderLocationsTable(locations) {
+    console.log(locations);
+    const strHTML = locations.map(location => {
+        return `<li class="location"><p>${location.searchTerm}</p>
+        <button class="go-to-location-btn"><i class="fas fa-bullseye""></i>Go</button>
         <button class="delete-btn"><i class="fas fa-trash"></i>Delete</button>
-        `)
-    document.querySelector('.locations-list').innerHTML = strHTML.join('');
+        </li>
+        `}).join('')
+    document.querySelector('.locations-list').innerHTML = strHTML;
+}
+
+function onGoBtn(ev) {
+    console.log(ev.target);
 }
 
 function addMarker(loc) {
