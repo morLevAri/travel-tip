@@ -1,15 +1,14 @@
-'use strict';
 
 import { mapService } from './services/map-service.js'
 import { locationService } from './services/location-service.js'
 import { storageService } from './services/storage-service.js'
 
-let gMap;
+let gGoogleMap;
 
 window.onload = () => {
     initMap()
         .then(() => {
-            mapService.getMyPosition()
+            mapService.getUserPosition()
                 .then((position) => {
                     renderPosition(position)
                 })
@@ -23,27 +22,27 @@ window.onload = () => {
         .catch(err => {
             console.log('INIT MAP ERROR:', err);
         })
-}
 
-document.querySelector('.location-nav').addEventListener('submit', onSearchLocation)
-document.querySelector('.my-location-btn').addEventListener('click', onFindMyLocation)
+    document.querySelector('.location-nav').addEventListener('submit', onSearchLocation)
+    document.querySelector('.user-location-btn').addEventListener('click', onFindUserLocation)
+}
 
 
 export function initMap() {
     return _connectGoogleApi()
         .then(() => {
-            gMap = new google.maps.Map(
+            gGoogleMap = new google.maps.Map(
                 document.querySelector('.map'), {
                 zoom: 15
             })
-            gMap.addListener('click', e => {
+            gGoogleMap.addListener('click', e => {
                 const latCoord = e.latLng.lat();
                 const lngCoord = e.latLng.lng();
                 console.log('lat:', latCoord, 'lng:', lngCoord);
 
                 let marker = new google.maps.Marker({
                     position: e.latLng,
-                    map: gMap,
+                    map: gGoogleMap,
                     icon: '../assets/imgs/nav.png',
                 });
             })
@@ -93,7 +92,7 @@ function onGoBtn(ev) {
 function addMarker(loc) {
     let marker = new google.maps.Marker({
         position: loc,
-        map: gMap,
+        map: gGoogleMap,
         icon: '../assets/imgs/nav.png',
     });
     return marker;
@@ -101,12 +100,12 @@ function addMarker(loc) {
 
 function panTo(lat, lng) {
     let laLatLng = new google.maps.LatLng(lat, lng);
-    gMap.panTo(laLatLng);
+    gGoogleMap.panTo(laLatLng);
 }
 
-function onFindMyLocation() {
+function onFindUserLocation() {
     console.log('my location');
-    mapService.getMyPosition()
+    mapService.getUserPosition()
         .then(ans => {
             let position = { lat: ans.coords.latitude, lng: ans.coords.longitude };
             panTo(position.lat, position.lng);

@@ -1,4 +1,3 @@
-'use strict';
 
 import { utilService } from './util-service.js'
 import { mapService } from './map-service.js'
@@ -20,7 +19,7 @@ function getSearchRes(term) {
         .then(res => res.data)
 }
 
-mapService.getMyPosition()
+mapService.getUserPosition()
     .then(ans => {
         let location = { lat: ans.coords.latitude, lng: ans.coords.longitude };
         return location

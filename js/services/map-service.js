@@ -1,12 +1,11 @@
-'use strict';
 
 // import { storageService } from './services/storage-service.js'
 
 export const mapService = {
-    getMyPosition,
+    getUserPosition,
 }
 
-function getMyPosition() {
+function getUserPosition() {
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject)
     })
