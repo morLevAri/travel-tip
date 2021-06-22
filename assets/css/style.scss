@@ -44,6 +44,22 @@ body {
                     height: 48%;
                     background-color: #fff;
                     border: 1px solid grey;
+
+
+                    .locations-list {
+                        .location {
+                            button {
+                                font-size: 30px;
+                                cursor: pointer;
+                                background-color: transparent;
+                                border: none;
+
+                                &:hover {
+                                    color: red;
+                                }
+                            }
+                        }
+                    }
                 }
             }
 

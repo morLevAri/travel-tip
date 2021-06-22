@@ -61,6 +61,17 @@ body main .main-container .weather-locations .locations-container {
   border: 1px solid grey;
 }
 
+body main .main-container .weather-locations .locations-container .locations-list .location button {
+  font-size: 30px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+body main .main-container .weather-locations .locations-container .locations-list .location button:hover {
+  color: red;
+}
+
 body main .main-container .map {
   width: 30%;
   padding: 10px;
