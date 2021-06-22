@@ -2,10 +2,14 @@
 import { mapService } from './services/map-service.js'
 import { locationService } from './services/location-service.js'
 import { storageService } from './services/storage-service.js'
+import { calcController } from './calc-controller.js'
 
 let gGoogleMap;
 
 window.onload = () => {
+    calcController.initCurrs()
+    document.querySelector('.convert-btn').addEventListener('click', calcController.onConvert)
+
     initMap()
         .then(() => {
             locationService.getLocationsFromStorage()

@@ -82,4 +82,51 @@ body {
             width: 60%;
         }
     }
+
+    .currency-calc {
+        display: flex;
+        padding: 20px;
+        justify-content: space-between;
+        background-color: rgb(243, 243, 243);
+        border-radius: 5px;
+        width: 60%;
+        margin: 50px auto;
+
+        .calc {
+            display: flex;
+            justify-content: space-between;
+
+            .culc-field {
+                border: 1px solid rgb(209, 209, 209);
+                text-align: center;
+                padding: 7px;
+                width: 120px;
+            }
+
+        }
+
+        .culc-output {
+            border: 1px solid rgb(209, 209, 209);
+            text-align: center;
+            padding: 7px;
+            width: 120px;
+        }
+
+        .convert-btn {
+            cursor: pointer;
+            background-color: rgb(143, 143, 143);
+            border-radius: 4px;
+            color: whitesmoke;
+            width: 200px;
+            border: none;
+
+            &:hover {
+                background-color: rgb(100, 100, 100);
+            }
+        }
+    }
+
+
+
+
 }

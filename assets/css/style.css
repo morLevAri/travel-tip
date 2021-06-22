@@ -93,4 +93,54 @@ body main .curr-location h2 {
   font-weight: 200;
   color: white;
 }
+
+body .currency-calc {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 20px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  width: 60%;
+  margin: 50px auto;
+}
+
+body .currency-calc .calc {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+body .currency-calc .calc .culc-field {
+  border: 1px solid #d1d1d1;
+  text-align: center;
+  padding: 7px;
+  width: 120px;
+}
+
+body .currency-calc .culc-output {
+  border: 1px solid #d1d1d1;
+  text-align: center;
+  padding: 7px;
+  width: 120px;
+}
+
+body .currency-calc .convert-btn {
+  cursor: pointer;
+  background-color: #8f8f8f;
+  border-radius: 4px;
+  color: whitesmoke;
+  width: 200px;
+  border: none;
+}
+
+body .currency-calc .convert-btn:hover {
+  background-color: #646464;
+}
 /*# sourceMappingURL=style.css.map */
