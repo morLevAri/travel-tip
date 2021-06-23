@@ -18,7 +18,7 @@ let gCurrLocation = {
     lat: 32.0852999,
     lng: 34.78176759999999,
     // weather: '30C',
-    createdAt: Date.now(),
+    createdAt: Date.now()
 }
 
 let gLocations = [{
@@ -30,14 +30,11 @@ let gLocations = [{
     createdAt: Date.now()
 }];
 
-
 mapService.getUserPosition()
     .then(ans => {
         let location = { lat: ans.coords.latitude, lng: ans.coords.longitude };
         return location
     })
-
-console.log('gLocations before before:', gLocations);
 
 function searchLocation(val) {
     return getSearchRes(val)
@@ -48,16 +45,18 @@ function searchLocation(val) {
             gCurrLocation.lat = lat;
             gCurrLocation.lng = lng;
             gCurrLocation.createdAt = Date.now();
-
-            gLocations.push(gCurrLocation)
-            console.log('gLocations after:', gLocations);
-
-            storageService.saveToStorage(STORAGE_KEY, gLocations)
+            saveLocationsToStorage(gCurrLocation)
             return gCurrLocation;
         })
-        .then(data => {
-            return data;
-        })
+}
+
+
+function saveLocationsToStorage(currLocation) {
+    gLocations = storageService.loadFromStorage(STORAGE_KEY);
+    if (!gLocations) gLocations = [];
+    gLocations.push(currLocation);
+    storageService.saveToStorage(STORAGE_KEY, gLocations);
+    console.log('gLocations is:', gLocations)
 }
 
 function getLocationsFromStorage() {
@@ -70,12 +69,10 @@ function getLocationsFromStorage() {
 }
 
 function getLocationsList() {
-    // console.log('getting locations:', gLocations);
     return Promise.resolve(gLocations)
 }
 
 function getCurrLocation() {
-    // console.log('getting Current Location:', gCurrLocation);
     return Promise.resolve(gCurrLocation)
 }
 

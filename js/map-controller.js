@@ -7,8 +7,9 @@ import { calcController } from './calc-controller.js'
 let gGoogleMap;
 
 window.onload = () => {
-    calcController.initCurrs()
-    document.querySelector('.convert-btn').addEventListener('click', calcController.onConvert)
+
+    // calcController.initCurrs()
+    // document.querySelector('.convert-btn').addEventListener('click', calcController.onConvert)
 
     initMap()
         .then(() => {
@@ -62,21 +63,20 @@ function onSearchLocation(ev) {
     ev.preventDefault();
     let elInput = document.querySelector('input[name=search-input]');
     locationService.searchLocation(elInput.value)
-    // .then(location => {
-    //     const locations = locationService.getLocationsList();
-    //     const { lat, lng } = location.results[0].geometry.location
-    //     panTo(lat, lng)
-    //     return locations
-    // })
-    // .then(locations => { renderLocationsTable(locations) })
+        .then(location => {
+            panTo(location.lat, location.lng)
+            locationService.getLocationsList()
+                .then(locations => renderLocationsTable(locations))
+        })
 
-    // document.querySelector('.curr-loc-span').innerHTML = elInput.value;
-    // elInput.value = '';
+    document.querySelector('.curr-loc-span').innerHTML = elInput.value;
+    elInput.value = '';
 }
 
 function renderLocationsTable() {
     locationService.getLocationsList()
         .then(locations => {
+            console.log(locations);
             const strHTML = locations.map(location => {
                 return `<li class="location"><p>${location.name}</p>
                 <button class= "go-to-location-btn go-to-loc-${location.id}"><i class="fas fa-map-marker-alt"></i></button>
@@ -85,9 +85,7 @@ function renderLocationsTable() {
             }).join('')
             document.querySelector('.locations-list').innerHTML = strHTML;
         })
-
 }
-
 
 function onGoBtn(ev) {
     console.log(ev.target);
