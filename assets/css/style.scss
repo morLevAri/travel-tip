@@ -80,6 +80,10 @@ body {
                 color: white;
             }
 
+            .curr-loc-span {
+                text-transform: capitalize;
+            }
+
             display: flex;
             margin: 20px auto;
             justify-content: space-between;

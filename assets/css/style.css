@@ -98,6 +98,10 @@ body main .curr-location h2 {
   color: white;
 }
 
+body main .curr-location .curr-loc-span {
+  text-transform: capitalize;
+}
+
 body .currency-calc {
   display: -webkit-box;
   display: -ms-flexbox;

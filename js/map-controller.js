@@ -1,7 +1,6 @@
 
 import { mapService } from './services/map-service.js'
 import { locationService } from './services/location-service.js'
-import { storageService } from './services/storage-service.js'
 import { calcController } from './calc-controller.js'
 import { utilService } from './services/util-service.js'
 
@@ -46,6 +45,7 @@ export function initMap() {
                 const latCoord = e.latLng.lat();
                 const lngCoord = e.latLng.lng();
                 console.log('lat:', latCoord, 'lng:', lngCoord);
+                updateSpan('Somewhere')
 
                 new google.maps.Marker({
                     position: e.latLng,
@@ -75,10 +75,8 @@ function renderLocationsTable() {
         .then(locations => {
             locations.forEach(location => {
                 document.querySelector(`.go-to-loc-${location.id}`).addEventListener('click', () => {
-                    panTo(location.lat, location.lng)
+                    onGoBtn(location)
                 })
-                // document.querySelector(`.del-loc-${location.id}`).addEventListener('click', () => {
-                // })
             })
         })
 }
@@ -109,8 +107,17 @@ function onSearchLocation(ev) {
             panTo(location.lat, location.lng)
             renderLocationsTable()
         })
-    document.querySelector('.curr-loc-span').innerHTML = elInput.value;
+    updateSpan(elInput.value)
     elInput.value = '';
+}
+
+function onGoBtn(location) {
+    panTo(location.lat, location.lng)
+    updateSpan(location.name)
+}
+
+function updateSpan(locationName) {
+    document.querySelector('.curr-loc-span').innerHTML = locationName;
 }
 
 function addMarker(loc) {
