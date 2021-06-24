@@ -3,8 +3,19 @@ import { mapService } from './services/map-service.js'
 import { locationService } from './services/location-service.js'
 import { storageService } from './services/storage-service.js'
 import { calcController } from './calc-controller.js'
+import { utilService } from './services/util-service.js'
+
 
 let gGoogleMap;
+
+let gCurrLocation = {
+    id: utilService.makeId(),
+    name: 'Tel Aviv-Yafo',
+    lat: 32.0852999,
+    lng: 34.78176759999999,
+    // weather: '30C',
+    createdAt: Date.now()
+}
 
 window.onload = () => {
     // calcController.initCurrs()
@@ -13,7 +24,6 @@ window.onload = () => {
     initMap()
         .then(() => {
             locationService.getLocationsFromStorage()
-                .then(locations => console.log(locations))
                 .then(renderLocationsTable())
             renderPosition()
         })
@@ -52,7 +62,6 @@ export function initMap() {
 
 function renderLocationsTable() {
     locationService.getLocationsFromStorage()
-
         .then(locations => {
             const strHTML = locations.map(location => {
                 return `<li class="location"><p>${location.name}</p>
@@ -61,33 +70,47 @@ function renderLocationsTable() {
                 `
             }).join('')
             document.querySelector('.locations-list').innerHTML = strHTML;
+            return locations
+        })
+        .then(locations => {
+            locations.forEach(location => {
+                document.querySelector(`.go-to-loc-${location.id}`).addEventListener('click', () => {
+                    panTo(location.lat, location.lng)
+                })
+                // document.querySelector(`.del-loc-${location.id}`).addEventListener('click', () => {
+                // })
+            })
         })
 }
 
 function renderPosition() {
-    locationService.getCurrLocation()
-        .then(currLoc => {
-            const position = { lat: currLoc.lat, lng: currLoc.lng };
-            panTo(position.lat, position.lng);
-            addMarker(position);
-        })
+    const position = { lat: gCurrLocation.lat, lng: gCurrLocation.lng };
+    panTo(position.lat, position.lng);
+    addMarker(position);
 }
 
 function onSearchLocation(ev) {
     ev.preventDefault();
     let elInput = document.querySelector('input[name=search-input]');
-    locationService.searchLocation(elInput.value)
+    gCurrLocation.name = elInput.value;
+    gCurrLocation.id = utilService.makeId()
+    gCurrLocation.name = elInput.value;
+    gCurrLocation.createdAt = Date.now();
+
+    locationService.getSearchRes(elInput.value)
+        .then(res => {
+            const { lat, lng } = res.results[0].geometry.location
+            gCurrLocation.lat = lat;
+            gCurrLocation.lng = lng;
+            locationService.saveLocationsToStorage(gCurrLocation)
+            return gCurrLocation;
+        })
         .then(location => {
             panTo(location.lat, location.lng)
             renderLocationsTable()
         })
     document.querySelector('.curr-loc-span').innerHTML = elInput.value;
     elInput.value = '';
-}
-
-
-function onGoBtn(ev) {
-    console.log(ev.target);
 }
 
 function addMarker(loc) {
