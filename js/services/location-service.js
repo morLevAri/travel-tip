@@ -6,7 +6,6 @@ import { storageService } from './storage-service.js'
 export const locationService = {
     getLocationsFromStorage,
     searchLocation,
-    getLocationsList,
     getCurrLocation,
 }
 
@@ -56,10 +55,7 @@ function saveLocationsToStorage(currLocation) {
     if (!gLocations) gLocations = [];
     gLocations.push(currLocation);
     storageService.saveToStorage(STORAGE_KEY, gLocations);
-    console.log('gLocations is:', gLocations)
 }
-
-//  ================================================================== solve this (What is the difference?):
 
 function getLocationsFromStorage() {
     const locations = storageService.loadFromStorage(STORAGE_KEY)
@@ -68,13 +64,8 @@ function getLocationsFromStorage() {
         storageService.saveToStorage(STORAGE_KEY, gLocations);
         return;
     }
+    return Promise.resolve(locations)
 }
-
-function getLocationsList() {
-    return Promise.resolve(gLocations)
-}
-
-//  =================================================
 
 function getCurrLocation() {
     return Promise.resolve(gCurrLocation)

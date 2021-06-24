@@ -61,6 +61,10 @@ body main .main-container .weather-locations .locations-container {
   border: 1px solid grey;
 }
 
+body main .main-container .weather-locations .locations-container .locations-list .location p {
+  text-transform: capitalize;
+}
+
 body main .main-container .weather-locations .locations-container .locations-list .location button {
   font-size: 30px;
   cursor: pointer;

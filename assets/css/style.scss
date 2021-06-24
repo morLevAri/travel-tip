@@ -48,6 +48,10 @@ body {
 
                     .locations-list {
                         .location {
+                            p {
+                                text-transform: capitalize;
+                            }
+
                             button {
                                 font-size: 30px;
                                 cursor: pointer;

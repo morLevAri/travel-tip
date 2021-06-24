@@ -7,24 +7,23 @@ import { calcController } from './calc-controller.js'
 let gGoogleMap;
 
 window.onload = () => {
-
     // calcController.initCurrs()
     // document.querySelector('.convert-btn').addEventListener('click', calcController.onConvert)
 
     initMap()
         .then(() => {
-            locationService.getLocationsList()  // =================== solve this (What is the difference?)
-            locationService.getLocationsFromStorage() // =================== solve this (What is the difference?)
-            renderLocationsTable()
+            locationService.getLocationsFromStorage()
+                .then(locations => console.log(locations))
+                .then(renderLocationsTable())
             renderPosition()
         })
         .catch(err => {
             console.log('INIT MAP ERROR:', err);
         })
+
     document.querySelector('.location-nav').addEventListener('submit', onSearchLocation)
     document.querySelector('.user-location-btn').addEventListener('click', onFindUserLocation)
 }
-
 
 export function initMap() {
     return _connectGoogleApi()
@@ -51,10 +50,24 @@ export function initMap() {
         })
 }
 
+function renderLocationsTable() {
+    locationService.getLocationsFromStorage()
+
+        .then(locations => {
+            const strHTML = locations.map(location => {
+                return `<li class="location"><p>${location.name}</p>
+                <button class= "go-to-location-btn go-to-loc-${location.id}"><i class="fas fa-map-marker-alt"></i></button>
+                <button class= "delete-btn del-loc-${location.id}"><i class="far fa-trash-alt"></i></button>
+                `
+            }).join('')
+            document.querySelector('.locations-list').innerHTML = strHTML;
+        })
+}
+
 function renderPosition() {
     locationService.getCurrLocation()
-        .then(currPos => {
-            const position = { lat: currPos.lat, lng: currPos.lng };
+        .then(currLoc => {
+            const position = { lat: currLoc.lat, lng: currLoc.lng };
             panTo(position.lat, position.lng);
             addMarker(position);
         })
@@ -66,27 +79,12 @@ function onSearchLocation(ev) {
     locationService.searchLocation(elInput.value)
         .then(location => {
             panTo(location.lat, location.lng)
-            locationService.getLocationsList()
-                .then(locations => renderLocationsTable(locations))   // =================== solve this (arg?)
+            renderLocationsTable()
         })
-
     document.querySelector('.curr-loc-span').innerHTML = elInput.value;
     elInput.value = '';
 }
 
-function renderLocationsTable() {   // =================== solve this (no arg?)
-    locationService.getLocationsList()
-        .then(locations => {
-            console.log(locations);
-            const strHTML = locations.map(location => {
-                return `<li class="location"><p>${location.name}</p>
-                <button class= "go-to-location-btn go-to-loc-${location.id}"><i class="fas fa-map-marker-alt"></i></button>
-                <button class= "delete-btn del-loc-${location.id}"><i class="far fa-trash-alt"></i></button>
-                `
-            }).join('')
-            document.querySelector('.locations-list').innerHTML = strHTML;
-        })
-}
 
 function onGoBtn(ev) {
     console.log(ev.target);
@@ -123,7 +121,6 @@ function _connectGoogleApi() {
     // elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${mykey}`;
     elGoogleApi.async = true;
     document.body.append(elGoogleApi);
-
     return new Promise((resolve, reject) => {
         elGoogleApi.onload = resolve;
         elGoogleApi.onerror = () => reject('Google script failed to load')
