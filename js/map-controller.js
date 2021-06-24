@@ -13,7 +13,8 @@ window.onload = () => {
 
     initMap()
         .then(() => {
-            locationService.getLocationsFromStorage()
+            locationService.getLocationsList()  // =================== solve this (What is the difference?)
+            locationService.getLocationsFromStorage() // =================== solve this (What is the difference?)
             renderLocationsTable()
             renderPosition()
         })
@@ -66,14 +67,14 @@ function onSearchLocation(ev) {
         .then(location => {
             panTo(location.lat, location.lng)
             locationService.getLocationsList()
-                .then(locations => renderLocationsTable(locations))
+                .then(locations => renderLocationsTable(locations))   // =================== solve this (arg?)
         })
 
     document.querySelector('.curr-loc-span').innerHTML = elInput.value;
     elInput.value = '';
 }
 
-function renderLocationsTable() {
+function renderLocationsTable() {   // =================== solve this (no arg?)
     locationService.getLocationsList()
         .then(locations => {
             console.log(locations);

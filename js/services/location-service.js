@@ -59,6 +59,8 @@ function saveLocationsToStorage(currLocation) {
     console.log('gLocations is:', gLocations)
 }
 
+//  ================================================================== solve this (What is the difference?):
+
 function getLocationsFromStorage() {
     const locations = storageService.loadFromStorage(STORAGE_KEY)
     if (!locations || !locations.length) {
@@ -71,6 +73,8 @@ function getLocationsFromStorage() {
 function getLocationsList() {
     return Promise.resolve(gLocations)
 }
+
+//  =================================================
 
 function getCurrLocation() {
     return Promise.resolve(gCurrLocation)
