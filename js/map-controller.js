@@ -83,7 +83,7 @@ function renderLocationsTable() {
 
 function renderPosition() {
     const position = { lat: gCurrLocation.lat, lng: gCurrLocation.lng };
-    panTo(position.lat, position.lng);
+    panTo(position);
     addMarker(position);
 }
 
@@ -104,7 +104,8 @@ function onSearchLocation(ev) {
             return gCurrLocation;
         })
         .then(location => {
-            panTo(location.lat, location.lng)
+            panTo(location)
+            addMarker(location);
             renderLocationsTable()
         })
     updateSpan(elInput.value)
@@ -112,7 +113,8 @@ function onSearchLocation(ev) {
 }
 
 function onGoBtn(location) {
-    panTo(location.lat, location.lng)
+    panTo(location)
+    addMarker(location);
     updateSpan(location.name)
 }
 
@@ -139,7 +141,7 @@ function onFindUserLocation() {
     mapService.getUserPosition()
         .then(ans => {
             let position = { lat: ans.coords.latitude, lng: ans.coords.longitude };
-            panTo(position.lat, position.lng);
+            panTo(position);
             addMarker(position);
         })
 }
