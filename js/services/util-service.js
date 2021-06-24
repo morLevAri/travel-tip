@@ -1,6 +1,8 @@
+// import { locationService } from './location-service.js'
 
 export const utilService = {
-    makeId
+    makeId,
+    // removeSwal,
 }
 
 function makeId(length = 6) {
@@ -12,3 +14,19 @@ function makeId(length = 6) {
     }
     return txt;
 }
+
+// function removeSwal(id) {
+//     Swal.fire({
+//         title: 'Are you sure?',
+//         text: "You won't be able to revert this!",
+//         icon: 'warning',
+//         showCancelButton: true,
+//         confirmButtonColor: '#3085d6',
+//         cancelButtonColor: '#d33',
+//         confirmButtonText: 'Yes, delete it!'
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+//             locationService.removeLoc(id)
+//         }
+//     })
+// }

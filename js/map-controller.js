@@ -1,9 +1,8 @@
 
 import { mapService } from './services/map-service.js'
 import { locationService } from './services/location-service.js'
-import { calcController } from './calc-controller.js'
+// import { calcController } from './calc-controller.js'
 import { utilService } from './services/util-service.js'
-
 
 let gGoogleMap;
 
@@ -77,6 +76,10 @@ function renderLocationsTable() {
                 document.querySelector(`.go-to-loc-${location.id}`).addEventListener('click', () => {
                     onGoBtn(location)
                 })
+                document.querySelector(`.del-loc-${location.id}`).addEventListener('click', () => {
+                    onRemoveLoc(location.id);
+                    renderLocationsTable();
+                })
             })
         })
 }
@@ -116,6 +119,12 @@ function onGoBtn(location) {
     panTo(location)
     addMarker(location);
     updateSpan(location.name)
+}
+
+function onRemoveLoc(id) {
+    locationService.removeLoc(id)
+    renderLocationsTable()
+    // renderLocationsTable(utilService.removeSwal(id))
 }
 
 function updateSpan(locationName) {

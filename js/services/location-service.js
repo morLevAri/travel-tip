@@ -4,6 +4,7 @@ import { mapService } from './map-service.js'
 import { storageService } from './storage-service.js'
 
 export const locationService = {
+    removeLoc,
     saveLocationsToStorage,
     getLocationsFromStorage,
     getSearchRes,
@@ -25,6 +26,18 @@ mapService.getUserPosition()
         let location = { lat: ans.coords.latitude, lng: ans.coords.longitude };
         return location
     })
+
+function removeLoc(id) {
+    const idx = gLocations.findIndex(function (location) {
+        return location.id === id
+    })
+    console.log(idx);
+    if (idx >= 0) {
+        if (confirm('Are you sure?'))
+            gLocations.splice(idx, 1);
+        storageService.saveToStorage(STORAGE_KEY, gLocations)
+    }
+}
 
 function saveLocationsToStorage(currLocation) {
     gLocations = storageService.loadFromStorage(STORAGE_KEY);
@@ -48,3 +61,4 @@ function getSearchRes(term) {
         // return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${term}&key=${mykey}`)
         .then(res => res.data)
 }
+
