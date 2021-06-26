@@ -1,7 +1,7 @@
 
 import { mapService } from './services/map-service.js'
 import { locationService } from './services/location-service.js'
-// import { calcController } from './calc-controller.js'
+import { calcController } from './calc-controller.js'
 import { utilService } from './services/util-service.js'
 
 let gGoogleMap;
@@ -17,12 +17,11 @@ let gCurrLocation = {
 
 window.onload = () => {
     // calcController.initCurrs()
-    // document.querySelector('.convert-btn').addEventListener('click', calcController.onConvert)
+    document.querySelector('.convert-btn').addEventListener('click', calcController.onConvert)
 
     initMap()
         .then(() => {
-            locationService.getLocationsFromStorage()
-                .then(renderLocationsTable())
+            renderLocationsTable()
             renderPosition()
         })
         .catch(err => {
@@ -68,6 +67,7 @@ function renderLocationsTable() {
                 <button class= "delete-btn del-loc-${location.id}"><i class="far fa-trash-alt"></i></button>
                 `
             }).join('')
+
             document.querySelector('.locations-list').innerHTML = strHTML;
             return locations
         })
@@ -78,7 +78,6 @@ function renderLocationsTable() {
                 })
                 document.querySelector(`.del-loc-${location.id}`).addEventListener('click', () => {
                     onRemoveLoc(location.id);
-                    renderLocationsTable();
                 })
             })
         })
@@ -113,6 +112,7 @@ function onSearchLocation(ev) {
         })
     updateSpan(elInput.value)
     elInput.value = '';
+    return
 }
 
 function onGoBtn(location) {

@@ -14,7 +14,7 @@ function getRates() {
     const rates = storageService.loadFromStorage(STORAGE_KEY)
     if (rates) return Promise.resolve(rates)
     if (rates && rates.time + gLastFetchAt > Date.now()) return Promise.resolve(rates)
-    const url = `http://api.exchangeratesapi.io/v1/latest?access_key=${secretkey}`
+    const url = `http://api.exchangeratesapi.io/v1/latest?access_key=${currKey}`
     return axios.get(url)
         .then(rates => rates.data.rates)
         .then(rates => { rates.time = Date.now(); return rates })

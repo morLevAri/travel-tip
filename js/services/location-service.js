@@ -47,11 +47,12 @@ function saveLocationsToStorage(currLocation) {
 }
 
 function getLocationsFromStorage() {
-    const locations = storageService.loadFromStorage(STORAGE_KEY)
+    let locations = storageService.loadFromStorage(STORAGE_KEY)
+    console.log('locations:', locations);
     if (!locations || !locations.length) {
         locations === gLocations;
+        locations = gLocations;
         storageService.saveToStorage(STORAGE_KEY, gLocations);
-        return;
     }
     return Promise.resolve(locations)
 }
