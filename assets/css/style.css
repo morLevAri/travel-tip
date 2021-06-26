@@ -4,6 +4,7 @@
 }
 
 body {
+  height: 100vh;
   background-color: #134052;
 }
 
@@ -27,59 +28,18 @@ body main .main-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-}
-
-body main .main-container .weather-locations {
-  width: 30%;
-  padding: 10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-body main .main-container .weather-locations .weather-container {
-  padding: 10px;
-  height: 48%;
-  background-color: #fff;
-  border: 1px solid grey;
-}
-
-body main .main-container .weather-locations .locations-container {
-  padding: 10px;
-  height: 48%;
-  background-color: #fff;
-  border: 1px solid grey;
-}
-
-body main .main-container .weather-locations .locations-container .locations-list .location p {
-  text-transform: capitalize;
-}
-
-body main .main-container .weather-locations .locations-container .locations-list .location button {
-  font-size: 30px;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-}
-
-body main .main-container .weather-locations .locations-container .locations-list .location button:hover {
-  color: red;
+  width: 80%;
+  margin: 0 auto;
 }
 
 body main .main-container .map {
-  width: 30%;
-  padding: 10px;
-  margin: 10px;
+  width: 100%;
+  height: 400px;
 }
 
 body main .curr-location {
@@ -94,12 +54,66 @@ body main .curr-location {
 }
 
 body main .curr-location h2 {
+  margin: 0;
   font-weight: 200;
   color: white;
 }
 
 body main .curr-location .curr-loc-span {
   text-transform: capitalize;
+}
+
+body main .locations-weather-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  height: 300px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+body main .locations-weather-container .locations-container {
+  overflow-y: auto;
+  height: 100%;
+  background-color: #fff;
+  border: 1px solid grey;
+  width: 60%;
+}
+
+body main .locations-weather-container .locations-container .locations-list {
+  -webkit-padding-start: 0;
+          padding-inline-start: 0;
+}
+
+body main .locations-weather-container .locations-container .locations-list .location {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: 10px;
+}
+
+body main .locations-weather-container .locations-container .locations-list .location p {
+  text-transform: capitalize;
+}
+
+body main .locations-weather-container .locations-container .locations-list .location button {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+body main .locations-weather-container .locations-container .locations-list .location button:hover {
+  color: red;
+}
+
+body main .locations-weather-container .weather-container {
+  padding: 10px;
+  height: 100%;
+  background-color: #fff;
+  width: 40%;
 }
 
 body .currency-calc {

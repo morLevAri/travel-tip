@@ -39,7 +39,7 @@ function removeLoc(id) {
 function saveLocationsToStorage(currLocation) {
     gLocations = storageService.loadFromStorage(STORAGE_KEY);
     if (!gLocations) gLocations = [];
-    gLocations.push(currLocation);
+    gLocations.unshift(currLocation);
     storageService.saveToStorage(STORAGE_KEY, gLocations);
 }
 

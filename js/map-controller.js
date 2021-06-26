@@ -1,7 +1,7 @@
 
 import { mapService } from './services/map-service.js'
 import { locationService } from './services/location-service.js'
-import { calcController } from './calc-controller.js'
+// import { calcController } from './calc-controller.js'
 import { utilService } from './services/util-service.js'
 
 let gGoogleMap;
@@ -16,8 +16,8 @@ let gCurrLocation = {
 }
 
 window.onload = () => {
-    calcController.initCurrs()
-    document.querySelector('.convert-btn').addEventListener('click', calcController.onConvert)
+    // calcController.initCurrs()
+    // document.querySelector('.convert-btn').addEventListener('click', calcController.onConvert)
     initMap()
         .then(() => {
             renderLocationsTable()
@@ -59,9 +59,12 @@ function renderLocationsTable() {
     locationService.getLocationsFromStorage()
         .then(locations => {
             const strHTML = locations.map(location => {
-                return `<li class="location"><p>${location.name}</p>
+                return `
+                <li class="location">
                 <button class= "go-to-location-btn go-to-loc-${location.id}"><i class="fas fa-map-marker-alt"></i></button>
                 <button class= "delete-btn del-loc-${location.id}"><i class="far fa-trash-alt"></i></button>
+                <p>${location.name}</p>
+                </li>
                 `
             }).join('')
 
