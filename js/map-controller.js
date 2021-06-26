@@ -16,9 +16,8 @@ let gCurrLocation = {
 }
 
 window.onload = () => {
-    // calcController.initCurrs()
+    calcController.initCurrs()
     document.querySelector('.convert-btn').addEventListener('click', calcController.onConvert)
-
     initMap()
         .then(() => {
             renderLocationsTable()
@@ -27,7 +26,6 @@ window.onload = () => {
         .catch(err => {
             console.log('INIT MAP ERROR:', err);
         })
-
     document.querySelector('.location-nav').addEventListener('submit', onSearchLocation)
     document.querySelector('.user-location-btn').addEventListener('click', onFindUserLocation)
 }
@@ -39,14 +37,13 @@ export function initMap() {
                 document.querySelector('.map'), {
                 zoom: 15
             })
-            gGoogleMap.addListener('click', e => {
-                const latCoord = e.latLng.lat();
-                const lngCoord = e.latLng.lng();
-                console.log('lat:', latCoord, 'lng:', lngCoord);
-                updateSpan('Somewhere')
+            gGoogleMap.addListener('click', ev => {
+                const latCoord = ev.latLng.lat();
+                const lngCoord = ev.latLng.lng();
+                onPickPlace(latCoord, lngCoord)
 
                 new google.maps.Marker({
-                    position: e.latLng,
+                    position: ev.latLng,
                     map: gGoogleMap,
                     icon: '../assets/imgs/nav.png',
                 });
@@ -93,16 +90,11 @@ function onSearchLocation(ev) {
     ev.preventDefault();
     let elInput = document.querySelector('input[name=search-input]');
     gCurrLocation.name = elInput.value;
-    gCurrLocation.id = utilService.makeId()
-    gCurrLocation.name = elInput.value;
-    gCurrLocation.createdAt = Date.now();
 
     locationService.getSearchRes(elInput.value)
         .then(res => {
             const { lat, lng } = res.results[0].geometry.location
-            gCurrLocation.lat = lat;
-            gCurrLocation.lng = lng;
-            locationService.saveLocationsToStorage(gCurrLocation)
+            updateCurrLocation(lat, lng)
             return gCurrLocation;
         })
         .then(location => {
@@ -115,6 +107,33 @@ function onSearchLocation(ev) {
     return
 }
 
+function onPickPlace(lat, lng) {
+    const geocoder = new google.maps.Geocoder();
+    const latlng = {
+        lat,
+        lng,
+    }
+    geocoder.geocode({ location: latlng })
+        .then((response) => {
+            let locationAddress = response.results[0].formatted_address
+            gCurrLocation.name = locationAddress;
+            updateCurrLocation(lat, lng)
+            renderLocationsTable()
+            updateSpan(locationAddress)
+            return gCurrLocation;
+        })
+        .catch((e) => window.alert("Geocoder failed due to: " + e))
+}
+
+function updateCurrLocation(lat, lng) {
+    gCurrLocation.lat = lat
+    gCurrLocation.lng = lng
+    gCurrLocation.id = utilService.makeId()
+    gCurrLocation.createdAt = Date.now();
+    locationService.saveLocationsToStorage(gCurrLocation)
+    return gCurrLocation;
+}
+
 function onGoBtn(location) {
     panTo(location)
     addMarker(location);
@@ -124,7 +143,6 @@ function onGoBtn(location) {
 function onRemoveLoc(id) {
     locationService.removeLoc(id)
     renderLocationsTable()
-    // renderLocationsTable(utilService.removeSwal(id))
 }
 
 function updateSpan(locationName) {
@@ -167,4 +185,5 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
+
 

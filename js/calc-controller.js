@@ -9,7 +9,7 @@ export const calcController = {
 }
 
 function initCurrs() {
-    console.log('%cinit', 'background:orange; color: blue;');
+    // console.log('%cinit', 'background:orange; color: blue;');
     Promise.resolve(onRenderCurrs())
         .then(onConvert)
 }

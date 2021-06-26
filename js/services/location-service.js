@@ -28,15 +28,12 @@ mapService.getUserPosition()
     })
 
 function removeLoc(id) {
-    const idx = gLocations.findIndex(function (location) {
+    const idx = gLocations.findIndex((location) => {
         return location.id === id
     })
-    console.log(idx);
-    if (idx >= 0) {
-        if (confirm('Are you sure?'))
-            gLocations.splice(idx, 1);
-        storageService.saveToStorage(STORAGE_KEY, gLocations)
-    }
+    if (confirm('Are you sure?'))
+        gLocations.splice(idx, 1);
+    storageService.saveToStorage(STORAGE_KEY, gLocations)
 }
 
 function saveLocationsToStorage(currLocation) {
@@ -48,7 +45,7 @@ function saveLocationsToStorage(currLocation) {
 
 function getLocationsFromStorage() {
     let locations = storageService.loadFromStorage(STORAGE_KEY)
-    console.log('locations:', locations);
+    // console.log('locations:', locations);
     if (!locations || !locations.length) {
         locations === gLocations;
         locations = gLocations;
