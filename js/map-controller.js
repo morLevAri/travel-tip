@@ -2,6 +2,7 @@
 import { mapService } from './services/map-service.js'
 import { locationService } from './services/location-service.js'
 // import { calcController } from './calc-controller.js'
+import { weatherController } from './weather-controller.js'
 import { utilService } from './services/util-service.js'
 
 let gGoogleMap;
@@ -18,6 +19,9 @@ let gCurrLocation = {
 window.onload = () => {
     // calcController.initCurrs()
     // document.querySelector('.convert-btn').addEventListener('click', calcController.onConvert)
+
+    weatherController.initWeather()
+
     initMap()
         .then(() => {
             renderLocationsTable()
@@ -82,6 +86,7 @@ function renderLocationsTable() {
             })
         })
 }
+
 
 function renderPosition() {
     const position = { lat: gCurrLocation.lat, lng: gCurrLocation.lng };
@@ -188,5 +193,17 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
+
+
+
+
+// function getYoutubeRes(searchInput) {
+//     const videosInfo = loadFromStorage(searchInput)
+//     if (videosInfo) return Promise.resolve(videosInfo)
+//     const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&videoEmbeddable=true&type=video&key=${mykey}&q=${searchInput}`;
+//     return axios.get(url)
+//         .then(res => res.data.items)
+//         .then(data => saveToStorage(searchInput, data))
+// }
 
 

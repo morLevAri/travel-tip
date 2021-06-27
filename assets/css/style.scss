@@ -82,8 +82,16 @@ body {
                             background-color: transparent;
                             border: none;
 
-                            &:hover {
-                                color: red;
+                            &.go-to-location-btn {
+                                &:hover {
+                                    color: rgb(0, 183, 196);
+                                }
+                            }
+
+                            &.delete-btn {
+                                &:hover {
+                                    color: red;
+                                }
                             }
                         }
                     }

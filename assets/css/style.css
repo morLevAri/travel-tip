@@ -105,7 +105,11 @@ body main .locations-weather-container .locations-container .locations-list .loc
   border: none;
 }
 
-body main .locations-weather-container .locations-container .locations-list .location button:hover {
+body main .locations-weather-container .locations-container .locations-list .location button.go-to-location-btn:hover {
+  color: #00b7c4;
+}
+
+body main .locations-weather-container .locations-container .locations-list .location button.delete-btn:hover {
   color: red;
 }
 
