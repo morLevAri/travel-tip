@@ -2,7 +2,7 @@
 import { mapService } from './services/map-service.js'
 import { locationService } from './services/location-service.js'
 // import { calcController } from './calc-controller.js'
-import { weatherController } from './weather-controller.js'
+import { weatherService } from './services/weather-service.js'
 import { utilService } from './services/util-service.js'
 
 let gGoogleMap;
@@ -12,7 +12,7 @@ let gCurrLocation = {
     name: 'Tel Aviv-Yafo',
     lat: 32.0852999,
     lng: 34.78176759999999,
-    // weather: '30C',
+    weather: 32.5,
     createdAt: Date.now()
 }
 
@@ -20,12 +20,11 @@ window.onload = () => {
     // calcController.initCurrs()
     // document.querySelector('.convert-btn').addEventListener('click', calcController.onConvert)
 
-    weatherController.initWeather()
-
     initMap()
         .then(() => {
             renderLocationsTable()
             renderPosition()
+            showWeather()
         })
         .catch(err => {
             console.log('INIT MAP ERROR:', err);
@@ -42,10 +41,9 @@ export function initMap() {
                 zoom: 15
             })
             gGoogleMap.addListener('click', ev => {
-                const latCoord = ev.latLng.lat();
-                const lngCoord = ev.latLng.lng();
-                onPickPlace(latCoord, lngCoord)
-
+                const lat = ev.latLng.lat();
+                const lng = ev.latLng.lng();
+                onPickPlace(lat, lng)
                 new google.maps.Marker({
                     position: ev.latLng,
                     map: gGoogleMap,
@@ -59,6 +57,36 @@ export function initMap() {
         })
 }
 
+function showWeather() {
+    const lat = gCurrLocation.lat;
+    const lng = gCurrLocation.lng;
+    weatherService.getWeatherToRender(lat, lng)
+        .then(data => {
+            gCurrLocation.weather = data.main.temp;
+            return {
+                description: data.weather[0].description,
+                mainTemp: data.main.temp,
+                // minTemp: data.main.temp_min, 
+                // maxTemp: data.main.temp_max, 
+                // wind: data.wind.speed, 
+                icon: data.weather[0].icon,
+            }
+        })
+        .then(renderWeather)
+}
+
+function renderWeather(weather) {
+    const strHTML =
+        `                
+        <h2>Weather today</h2>
+        <p>${weather.mainTemp}</p>
+        <h2>${weather.description}</h2>
+        <img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" alt=""/>
+        `
+    document.querySelector('.weather-container').innerHTML = strHTML;
+    return weather
+}
+
 function renderLocationsTable() {
     locationService.getLocationsFromStorage()
         .then(locations => {
@@ -67,7 +95,7 @@ function renderLocationsTable() {
                 <li class="location">
                 <button class= "go-to-location-btn go-to-loc-${location.id}"><i class="fas fa-map-marker-alt"></i></button>
                 <button class= "delete-btn del-loc-${location.id}"><i class="far fa-trash-alt"></i></button>
-                <p>${location.name}</p>
+                <p title="${location.lat}, ${location.lng}">${location.name}</p>
                 </li>
                 `
             }).join('')
@@ -87,7 +115,6 @@ function renderLocationsTable() {
         })
 }
 
-
 function renderPosition() {
     const position = { lat: gCurrLocation.lat, lng: gCurrLocation.lng };
     panTo(position);
@@ -97,12 +124,11 @@ function renderPosition() {
 function onSearchLocation(ev) {
     ev.preventDefault();
     let elInput = document.querySelector('input[name=search-input]');
-    gCurrLocation.name = elInput.value;
-
+    let locationName = elInput.value;
     locationService.getSearchRes(elInput.value)
         .then(res => {
             const { lat, lng } = res.results[0].geometry.location
-            updateCurrLocation(lat, lng)
+            updateCurrLocation(lat, lng, locationName)
             return gCurrLocation;
         })
         .then(location => {
@@ -110,7 +136,7 @@ function onSearchLocation(ev) {
             addMarker(location);
             renderLocationsTable()
         })
-    updateSpan(elInput.value)
+    updateSpan(locationName)
     elInput.value = '';
     return
 }
@@ -122,10 +148,9 @@ function onPickPlace(lat, lng) {
         lng,
     }
     geocoder.geocode({ location: latlng })
-        .then((response) => {
-            let locationAddress = response.results[0].formatted_address
-            gCurrLocation.name = locationAddress;
-            updateCurrLocation(lat, lng)
+        .then((res) => {
+            let locationAddress = res.results[0].formatted_address
+            updateCurrLocation(lat, lng, locationAddress)
             renderLocationsTable()
             updateSpan(locationAddress)
             return gCurrLocation;
@@ -133,16 +158,19 @@ function onPickPlace(lat, lng) {
         .catch((e) => window.alert("Geocoder failed due to: " + e))
 }
 
-function updateCurrLocation(lat, lng) {
+function updateCurrLocation(lat, lng, locationName) {
+    gCurrLocation.id = utilService.makeId()
+    gCurrLocation.name = locationName
     gCurrLocation.lat = lat
     gCurrLocation.lng = lng
-    gCurrLocation.id = utilService.makeId()
     gCurrLocation.createdAt = Date.now();
+    showWeather()
     locationService.saveLocationsToStorage(gCurrLocation)
-    return gCurrLocation;
+    return Promise.resolve(gCurrLocation)
 }
 
 function onGoBtn(location) {
+    updateCurrLocation(location.lat, location.lng, location.name)
     panTo(location)
     addMarker(location);
     updateSpan(location.name)
@@ -172,12 +200,13 @@ function panTo(lat, lng) {
 }
 
 function onFindUserLocation() {
-    console.log('my location');
     mapService.getUserPosition()
         .then(ans => {
             let position = { lat: ans.coords.latitude, lng: ans.coords.longitude };
+            updateCurrLocation(position.lat, position.lng, 'My Location')
             panTo(position);
             addMarker(position);
+            updateSpan('My Location')
         })
 }
 
@@ -193,17 +222,3 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
-
-
-
-
-// function getYoutubeRes(searchInput) {
-//     const videosInfo = loadFromStorage(searchInput)
-//     if (videosInfo) return Promise.resolve(videosInfo)
-//     const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&videoEmbeddable=true&type=video&key=${mykey}&q=${searchInput}`;
-//     return axios.get(url)
-//         .then(res => res.data.items)
-//         .then(data => saveToStorage(searchInput, data))
-// }
-
-

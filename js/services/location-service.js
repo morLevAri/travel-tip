@@ -17,9 +17,10 @@ let gLocations = [{
     name: 'Tel Aviv-Yafo',
     lat: 32.0852999,
     lng: 34.78176759999999,
-    // weather: '30C',
+    weather: 32.5,
     createdAt: Date.now()
 }];
+
 
 mapService.getUserPosition()
     .then(ans => {
