@@ -6,7 +6,6 @@ export const storageService = {
 
 function saveToStorage(key, val) {
     localStorage.setItem(key, JSON.stringify(val))
-    // return value
 }
 
 function loadFromStorage(key) {

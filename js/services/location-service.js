@@ -21,7 +21,6 @@ let gLocations = [{
     createdAt: Date.now()
 }];
 
-
 mapService.getUserPosition()
     .then(ans => {
         let location = { lat: ans.coords.latitude, lng: ans.coords.longitude };
@@ -32,8 +31,7 @@ function removeLoc(id) {
     const idx = gLocations.findIndex((location) => {
         return location.id === id
     })
-    if (confirm('Are you sure?'))
-        gLocations.splice(idx, 1);
+    gLocations.splice(idx, 1);
     storageService.saveToStorage(STORAGE_KEY, gLocations)
 }
 
@@ -46,7 +44,6 @@ function saveLocationsToStorage(currLocation) {
 
 function getLocationsFromStorage() {
     let locations = storageService.loadFromStorage(STORAGE_KEY)
-    // console.log('locations:', locations);
     if (!locations || !locations.length) {
         locations === gLocations;
         locations = gLocations;

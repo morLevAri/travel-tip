@@ -1,7 +1,6 @@
 
 import { mapService } from './services/map-service.js'
 import { locationService } from './services/location-service.js'
-// import { calcController } from './calc-controller.js'
 import { weatherService } from './services/weather-service.js'
 import { utilService } from './services/util-service.js'
 
@@ -17,9 +16,6 @@ let gCurrLocation = {
 }
 
 window.onload = () => {
-    // calcController.initCurrs()
-    // document.querySelector('.convert-btn').addEventListener('click', calcController.onConvert)
-
     initMap()
         .then(() => {
             renderLocationsTable()
@@ -66,9 +62,9 @@ function showWeather() {
             return {
                 description: data.weather[0].description,
                 mainTemp: data.main.temp,
-                // minTemp: data.main.temp_min, 
-                // maxTemp: data.main.temp_max, 
-                // wind: data.wind.speed, 
+                minTemp: data.main.temp_min,
+                maxTemp: data.main.temp_max,
+                wind: data.wind.speed,
                 icon: data.weather[0].icon,
             }
         })
@@ -79,8 +75,11 @@ function renderWeather(weather) {
     const strHTML =
         `                
         <h2>Weather today</h2>
-        <p>${weather.mainTemp}</p>
-        <h2>${weather.description}</h2>
+        <p>mainTemp:${weather.mainTemp}</p>
+        <p>minTemp:${weather.minTemp}</p>
+        <p>maxTemp:${weather.maxTemp}</p>
+        <p>wind:${weather.wind}</p>
+        <h2>description:${weather.description}</h2>
         <img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" alt=""/>
         `
     document.querySelector('.weather-container').innerHTML = strHTML;
@@ -99,7 +98,6 @@ function renderLocationsTable() {
                 </li>
                 `
             }).join('')
-
             document.querySelector('.locations-list').innerHTML = strHTML;
             return locations
         })
@@ -177,8 +175,20 @@ function onGoBtn(location) {
 }
 
 function onRemoveLoc(id) {
-    locationService.removeLoc(id)
-    renderLocationsTable()
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            locationService.removeLoc(id)
+            renderLocationsTable()
+        }
+    })
 }
 
 function updateSpan(locationName) {
@@ -206,7 +216,8 @@ function onFindUserLocation() {
             updateCurrLocation(position.lat, position.lng, 'My Location')
             panTo(position);
             addMarker(position);
-            updateSpan('My Location')
+            updateSpan('My Location');
+            renderLocationsTable();
         })
 }
 
