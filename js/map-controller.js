@@ -25,7 +25,7 @@ window.onload = () => {
         .catch(err => {
             console.log('INIT MAP ERROR:', err);
         })
-    document.querySelector('.location-nav').addEventListener('submit', onSearchLocation)
+    document.querySelector('.search-location').addEventListener('submit', onSearchLocation)
     document.querySelector('.user-location-btn').addEventListener('click', onFindUserLocation)
 }
 

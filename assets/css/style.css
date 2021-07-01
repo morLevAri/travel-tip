@@ -4,22 +4,35 @@
           box-sizing: border-box;
 }
 
-body {
-  height: 100vh;
-}
-
-body nav {
-  background-image: url("/assets/imgs/pexels-eberhard-grossgasteiger-2098427.jpg");
-  -o-object-fit: fill;
-     object-fit: fill;
-  background-color: rgba(133, 4, 4, 0.705);
-}
-
-body nav .logo {
-  padding: 20px;
+.flex {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+}
+
+nav {
+  background-color: #363636;
+  width: 100%;
+  overflow: auto;
+  padding: 10px 30px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+nav .logo {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -29,50 +42,79 @@ body nav .logo {
           align-items: center;
 }
 
-body nav .logo .logo-title {
-  color: #f86945;
-  color: white;
+nav .logo:hover {
+  cursor: pointer;
+}
+
+nav .logo .logo-title {
+  color: #ff5040;
   font-family: 'Fjalla One', sans-serif;
-  font-size: 40px;
+  font-size: 2rem;
   font-weight: 100;
-  margin: 0;
+  margin: 5px 0 0;
 }
 
-body nav .logo img {
+nav .logo .logo-img {
   width: 100px;
+}
+
+nav .btn {
+  color: white;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+nav .btn i:hover {
+  color: #ff5040;
+}
+
+nav .search-location {
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 20px auto;
+}
+
+nav .search-location .input-go {
+  background-color: transparent;
+  border: none;
+  outline: none;
   color: white;
 }
 
-body main .location-nav {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  margin: 20px auto;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  width: 60%;
+nav .search-location .input-go :focus {
+  background-color: none;
 }
 
-body main .main-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+nav .user-location-btn {
+  font-size: 30px;
+}
+
+main .main-container {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   width: 80%;
   margin: 0 auto;
 }
 
-body main .main-container .map {
-  width: 100%;
-  height: 400px;
+main .main-container .map {
+  width: 60%;
+  height: 25rem;
+  margin: 20px;
+  border-radius: 20px;
 }
 
-body main .curr-location {
+main .main-container .weather-container {
+  height: 25rem;
+  width: 215px;
+  padding: 20px;
+  background-color: #dddddd;
+  margin: 20px;
+  border-radius: 20px;
+}
+
+main .curr-location {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -83,120 +125,68 @@ body main .curr-location {
   width: 60%;
 }
 
-body main .curr-location h2 {
+main .curr-location h2 {
   margin: 0;
   font-weight: 200;
-  color: white;
+  color: #535353;
 }
 
-body main .curr-location .curr-loc-span {
+main .curr-location .curr-loc-span {
   text-transform: capitalize;
 }
 
-body main .locations-weather-container {
+main .locations-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  height: 300px;
-  width: 80%;
+  height: 200px;
   margin: 0 auto;
-}
-
-body main .locations-weather-container .locations-container {
   overflow-y: auto;
-  height: 100%;
   background-color: #fff;
   border: 1px solid grey;
   width: 60%;
 }
 
-body main .locations-weather-container .locations-container .locations-list {
+main .locations-container .locations-list {
   -webkit-padding-start: 0;
           padding-inline-start: 0;
 }
 
-body main .locations-weather-container .locations-container .locations-list .location {
+main .locations-container .locations-list .location {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   margin-left: 10px;
 }
 
-body main .locations-weather-container .locations-container .locations-list .location p {
+main .locations-container .locations-list .location p {
   text-transform: capitalize;
 }
 
-body main .locations-weather-container .locations-container .locations-list .location button {
+main .locations-container .locations-list .location button {
   font-size: 20px;
   cursor: pointer;
   background-color: transparent;
   border: none;
 }
 
-body main .locations-weather-container .locations-container .locations-list .location button.go-to-location-btn:hover {
+main .locations-container .locations-list .location button.go-to-location-btn:hover {
   color: #00b7c4;
 }
 
-body main .locations-weather-container .locations-container .locations-list .location button.delete-btn:hover {
+main .locations-container .locations-list .location button.delete-btn:hover {
   color: red;
 }
 
-body main .locations-weather-container .weather-container {
-  padding: 10px;
-  height: 100%;
-  background-color: #fff;
-  width: 40%;
-}
-
-body .currency-calc {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 20px;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  background-color: #f3f3f3;
-  border-radius: 5px;
-  width: 60%;
-  margin: 50px auto;
-}
-
-body .currency-calc .calc {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-body .currency-calc .calc .culc-field {
-  border: 1px solid #d1d1d1;
-  text-align: center;
-  padding: 7px;
-  width: 120px;
-}
-
-body .currency-calc .culc-output {
-  border: 1px solid #d1d1d1;
-  text-align: center;
-  padding: 7px;
-  width: 120px;
-}
-
-body .currency-calc .convert-btn {
-  cursor: pointer;
-  background-color: #8f8f8f;
-  border-radius: 4px;
-  color: whitesmoke;
-  width: 200px;
-  border: none;
-}
-
-body .currency-calc .convert-btn:hover {
-  background-color: #646464;
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  background-color: #ff5040;
+  color: #363636;
 }
 /*# sourceMappingURL=style.css.map */

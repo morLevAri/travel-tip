@@ -12,36 +12,32 @@
 
 <body>
     <!-- <h1>Travel Tip</h1> -->
+    <nav class="nav flex">
+        <div class="logo flex">
+            <img class="logo-img" src="assets/imgs/white/1.png" alt="">
+            <h3 class="logo-title">TravelTip</h3>
+        </div>
+        <form class="search-location flex" action="#">
+            <input class="input-go" type="text" value="" placeholder="Enter Location" name="search-input"
+                class="search-input">
+            <button title="Search" class="btn go-btn"><i class="fas fa-search-location"></i></button>
+        </form>
+        <button title="My Location" class="btn user-location-btn"><i class="fas fa-street-view"></i></button>
+    </nav>
     <main>
-        <nav class="nav">
-            <div class="logo">
-                <img class="logo-img" src="assets/imgs/white/1.png" alt="">
-                <h3 class="logo-title">TravelTip</h3>
-            </div>
-        </nav>
-        <section class="location-nav">
-            <form action="#">
-                <input type="text" value="" placeholder="Enter Location" name="search-input" class="search-input">
-                <button class="go-btn">GO</button>
-            </form>
-            <button class="user-location-btn">My Location</button>
-        </section>
-        <section class="main-container">
+        <section class="main-container flex">
             <div class="weather-container"></div>
-
             <div class="map" id="map"></div>
         </section>
         <section class="curr-location">
             <h2>Current Location: <span class="curr-loc-span"></span></h2>
         </section>
-        <section class="locations-weather-container">
-            <div class="locations-container">
-                <ul class="locations-list">
-                </ul>
-            </div>
-
+        <section class="locations-container">
+            <ul class="locations-list">
+            </ul>
         </section>
     </main>
+    <footer class="footer flex">This is a footer</footer>
 
     <script src="config.js"></script>
     <script src="lib/jquery.js"></script>
