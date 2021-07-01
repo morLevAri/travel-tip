@@ -74,12 +74,12 @@ function showWeather() {
 function renderWeather(weather) {
     const strHTML =
         `                
-        <h2>Weather today</h2>
+        <p>Weather today</p>
         <p>mainTemp:${weather.mainTemp}</p>
         <p>minTemp:${weather.minTemp}</p>
         <p>maxTemp:${weather.maxTemp}</p>
         <p>wind:${weather.wind}</p>
-        <h2>description:${weather.description}</h2>
+        <p>description:${weather.description}</p>
         <img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" alt=""/>
         `
     document.querySelector('.weather-container').innerHTML = strHTML;

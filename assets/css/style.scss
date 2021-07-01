@@ -2,13 +2,46 @@
     box-sizing: border-box;
 }
 
+// @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+
+
+
 body {
     height: 100vh;
-    background-color: rgb(19, 64, 82);
 
-    h1 {
-        color: rgb(248, 248, 167);
-        text-align: center;
+    // background-color: rgb(19, 64, 82);
+    // h1 {
+    //     color: rgb(248, 248, 167);
+    //     text-align: center;
+    // }
+    nav {
+        background-image: url("/assets/imgs/pexels-eberhard-grossgasteiger-2098427.jpg");
+        object-fit: fill;
+        background-color: rgba(133, 4, 4, 0.705);
+
+        .logo {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            // justify-content: center;
+            align-items: center;
+
+            .logo-title {
+                color: rgb(248, 105, 69);
+                color: rgb(255, 255, 255);
+                font-family: 'Fjalla One', sans-serif;
+                font-size: 40px;
+                font-weight: 100;
+                margin: 0;
+                // text-align: center;
+            }
+
+            img {
+                width: 100px;
+                color: white;
+            }
+        }
     }
 
     main {

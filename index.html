@@ -11,8 +11,14 @@
 </head>
 
 <body>
-    <h1>Travel Tip</h1>
+    <!-- <h1>Travel Tip</h1> -->
     <main>
+        <nav class="nav">
+            <div class="logo">
+                <img class="logo-img" src="assets/imgs/white/1.png" alt="">
+                <h3 class="logo-title">TravelTip</h3>
+            </div>
+        </nav>
         <section class="location-nav">
             <form action="#">
                 <input type="text" value="" placeholder="Enter Location" name="search-input" class="search-input">
@@ -21,6 +27,7 @@
             <button class="user-location-btn">My Location</button>
         </section>
         <section class="main-container">
+            <div class="weather-container"></div>
 
             <div class="map" id="map"></div>
         </section>
@@ -33,8 +40,6 @@
                 </ul>
             </div>
 
-            <div class="weather-container">
-            </div>
         </section>
     </main>
 
