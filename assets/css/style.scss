@@ -3,49 +3,29 @@
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap');
 
-$mainColor: rgb(255, 80, 64);
+$mainColor: rgb(155, 175, 110);
 $grey: rgb(54, 54, 54);
 
 .flex {
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
 body {
     height: 100vh;
     margin: 0;
+    font-family: 'Montserrat', sans-serif;
 }
 
 nav {
+    flex-wrap: wrap;
     background-color: $grey;
     width: 100%;
-    overflow: auto;
     padding: 10px 30px;
     justify-content: space-between;
     margin-bottom: 20px;
-
-    .logo {
-        flex-direction: column;
-        align-items: center;
-
-        &:hover {
-            cursor: pointer;
-        }
-
-        .logo-title {
-            color: $mainColor;
-            font-family: 'Fjalla One', sans-serif;
-            font-size: 2rem;
-            font-weight: 100;
-            margin: 5px 0 0;
-        }
-
-        .logo-img {
-            width: 100px;
-        }
-    }
 
     .btn {
         color: rgb(255, 255, 255);
@@ -58,21 +38,45 @@ nav {
         }
     }
 
+    .logo-and-search {
+        flex-wrap: wrap;
+        justify-content: space-between;
 
-    .search-location {
-        border: 1px solid white;
-        border-radius: 10px;
-        padding: 10px;
-        margin: 20px auto;
+        .logo {
+            margin-right: 30px;
+            flex-direction: column;
 
-        .input-go {
-            background-color: transparent;
-            border: none;
-            outline: none;
-            color: white;
+            &:hover {
+                cursor: pointer;
+            }
 
-            & :focus {
-                background-color: none;
+            .logo-title {
+                color: $mainColor;
+                font-family: 'Fjalla One', sans-serif;
+                font-size: 2rem;
+                font-weight: 100;
+                margin: 5px 0 0;
+            }
+
+            .logo-img {
+                width: 100px;
+            }
+        }
+
+        .search-location {
+            border: 1px solid white;
+            border-radius: 10px;
+            padding: 10px;
+
+            .input-go {
+                background-color: transparent;
+                border: none;
+                outline: none;
+                color: white;
+
+                & :focus {
+                    background-color: none;
+                }
             }
         }
     }
@@ -85,6 +89,7 @@ nav {
 main {
 
     .main-container {
+        justify-content: center;
         flex-wrap: wrap;
         width: 80%;
         margin: 0 auto;
@@ -99,7 +104,7 @@ main {
 
         .weather-container {
             height: 25rem;
-            width: 215px;
+            width: 230px;
             padding: 20px;
             background-color: rgb(221, 221, 221);
             margin: 20px;
@@ -169,6 +174,7 @@ main {
 }
 
 .footer {
+    justify-content: center;
     position: fixed;
     left: 0;
     bottom: 0;

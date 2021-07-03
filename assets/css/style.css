@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap");
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -8,9 +9,6 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -19,43 +17,19 @@
 body {
   height: 100vh;
   margin: 0;
+  font-family: 'Montserrat', sans-serif;
 }
 
 nav {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   background-color: #363636;
   width: 100%;
-  overflow: auto;
   padding: 10px 30px;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin-bottom: 20px;
-}
-
-nav .logo {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-nav .logo:hover {
-  cursor: pointer;
-}
-
-nav .logo .logo-title {
-  color: #ff5040;
-  font-family: 'Fjalla One', sans-serif;
-  font-size: 2rem;
-  font-weight: 100;
-  margin: 5px 0 0;
-}
-
-nav .logo .logo-img {
-  width: 100px;
 }
 
 nav .btn {
@@ -66,24 +40,55 @@ nav .btn {
 }
 
 nav .btn i:hover {
-  color: #ff5040;
+  color: #9baf6e;
 }
 
-nav .search-location {
+nav .logo-and-search {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+nav .logo-and-search .logo {
+  margin-right: 30px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+nav .logo-and-search .logo:hover {
+  cursor: pointer;
+}
+
+nav .logo-and-search .logo .logo-title {
+  color: #9baf6e;
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 2rem;
+  font-weight: 100;
+  margin: 5px 0 0;
+}
+
+nav .logo-and-search .logo .logo-img {
+  width: 100px;
+}
+
+nav .logo-and-search .search-location {
   border: 1px solid white;
   border-radius: 10px;
   padding: 10px;
-  margin: 20px auto;
 }
 
-nav .search-location .input-go {
+nav .logo-and-search .search-location .input-go {
   background-color: transparent;
   border: none;
   outline: none;
   color: white;
 }
 
-nav .search-location .input-go :focus {
+nav .logo-and-search .search-location .input-go :focus {
   background-color: none;
 }
 
@@ -92,6 +97,9 @@ nav .user-location-btn {
 }
 
 main .main-container {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   width: 80%;
@@ -107,7 +115,7 @@ main .main-container .map {
 
 main .main-container .weather-container {
   height: 25rem;
-  width: 215px;
+  width: 230px;
   padding: 20px;
   background-color: #dddddd;
   margin: 20px;
@@ -181,12 +189,15 @@ main .locations-container .locations-list .location button.delete-btn:hover {
 }
 
 .footer {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   height: 30px;
-  background-color: #ff5040;
+  background-color: #9baf6e;
   color: #363636;
 }
 /*# sourceMappingURL=style.css.map */

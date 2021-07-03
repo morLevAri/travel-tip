@@ -74,12 +74,12 @@ function showWeather() {
 function renderWeather(weather) {
     const strHTML =
         `                
-        <p>Weather today</p>
-        <p>mainTemp:${weather.mainTemp}</p>
-        <p>minTemp:${weather.minTemp}</p>
-        <p>maxTemp:${weather.maxTemp}</p>
-        <p>wind:${weather.wind}</p>
-        <p>description:${weather.description}</p>
+        <h2>Weather today:</h2>
+        <p>Main Temp:${weather.mainTemp}</p>
+        <p>Min Temp:${weather.minTemp}</p>
+        <p>Max Temp:${weather.maxTemp}</p>
+        <p>Wind:${weather.wind}</p>
+        <p>Description:${weather.description}</p>
         <img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" alt=""/>
         `
     document.querySelector('.weather-container').innerHTML = strHTML;
@@ -168,7 +168,7 @@ function updateCurrLocation(lat, lng, locationName) {
 }
 
 function onGoBtn(location) {
-    updateCurrLocation(location.lat, location.lng, location.name)
+    // updateCurrLocation(location.lat, location.lng, location.name)
     panTo(location)
     addMarker(location);
     updateSpan(location.name)
