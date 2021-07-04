@@ -61,9 +61,9 @@ function showWeather() {
             gCurrLocation.weather = data.main.temp;
             return {
                 description: data.weather[0].description,
-                mainTemp: data.main.temp,
-                minTemp: data.main.temp_min,
-                maxTemp: data.main.temp_max,
+                mainTemp: Math.floor(data.main.temp),
+                minTemp: Math.floor(data.main.temp_min),
+                maxTemp: Math.floor(data.main.temp_max),
                 wind: data.wind.speed,
                 icon: data.weather[0].icon,
             }
@@ -72,14 +72,15 @@ function showWeather() {
 }
 
 function renderWeather(weather) {
+
     const strHTML =
         `                
         <h2>Weather today:</h2>
-        <p>Main Temp:${weather.mainTemp}</p>
-        <p>Min Temp:${weather.minTemp}</p>
-        <p>Max Temp:${weather.maxTemp}</p>
-        <p>Wind:${weather.wind}</p>
-        <p>Description:${weather.description}</p>
+        <p>Main Temp: ${weather.mainTemp} °C</p>
+        <p>Min Temp: ${weather.minTemp} °C</p>
+        <p>Max Temp: ${weather.maxTemp} °C</p>
+        <p>Wind: ${weather.wind} m/s</p>
+        <p>Description: ${weather.description}</p>
         <img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" alt=""/>
         `
     document.querySelector('.weather-container').innerHTML = strHTML;
