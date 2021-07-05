@@ -72,7 +72,6 @@ function showWeather() {
 }
 
 function renderWeather(weather) {
-
     const strHTML =
         `                
         <h2>Weather today:</h2>
@@ -126,11 +125,15 @@ function onSearchLocation(ev) {
     let locationName = elInput.value;
     locationService.getSearchRes(elInput.value)
         .then(res => {
+            console.log('res:', res)
             const { lat, lng } = res.results[0].geometry.location
             updateCurrLocation(lat, lng, locationName)
+            showWeather()
+            locationService.saveLocationsToStorage(gCurrLocation)
             return gCurrLocation;
         })
         .then(location => {
+            console.log('location:', location)
             panTo(location)
             addMarker(location);
             renderLocationsTable()
@@ -150,6 +153,8 @@ function onPickPlace(lat, lng) {
         .then((res) => {
             let locationAddress = res.results[0].formatted_address
             updateCurrLocation(lat, lng, locationAddress)
+            locationService.saveLocationsToStorage(gCurrLocation)
+            showWeather()
             renderLocationsTable()
             updateSpan(locationAddress)
             return gCurrLocation;
@@ -163,13 +168,12 @@ function updateCurrLocation(lat, lng, locationName) {
     gCurrLocation.lat = lat
     gCurrLocation.lng = lng
     gCurrLocation.createdAt = Date.now();
-    showWeather()
-    locationService.saveLocationsToStorage(gCurrLocation)
     return Promise.resolve(gCurrLocation)
 }
 
 function onGoBtn(location) {
-    // updateCurrLocation(location.lat, location.lng, location.name)
+    updateCurrLocation(location.lat, location.lng, location.name)
+    showWeather()
     panTo(location)
     addMarker(location);
     updateSpan(location.name)
@@ -215,6 +219,8 @@ function onFindUserLocation() {
         .then(ans => {
             let position = { lat: ans.coords.latitude, lng: ans.coords.longitude };
             updateCurrLocation(position.lat, position.lng, 'My Location')
+            locationService.saveLocationsToStorage(gCurrLocation)
+            showWeather()
             panTo(position);
             addMarker(position);
             updateSpan('My Location');
